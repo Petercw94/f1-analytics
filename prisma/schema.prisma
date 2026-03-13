@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id         Int             @id @default(autoincrement())
+  sessionKey Int             @unique
+  label      String
+  overview   SessionOverview?
+}
+
+model SessionOverview {
+  id         Int       @id @default(autoincrement())
+  sessionId  Int       @unique
+  winner     String
+  totalLaps  Int
+  overtakes  Int
+  avgPitStop Float
+  session    Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  lapSeries  LapPoint[]
+  pitStops   PitStop[]
+  stints     Stint[]
+}
+
+model LapPoint {
+  id         Int             @id @default(autoincrement())
+  overviewId Int
+  lap        Int
+  norris     Float
+  leclerc    Float
+  overview   SessionOverview @relation(fields: [overviewId], references: [id], onDelete: Cascade)
+}
+
+model PitStop {
+  id          Int             @id @default(autoincrement())
+  overviewId  Int
+  driver      String
+  lap         Int
+  stop        Float
+  compoundOut String
+  overview    SessionOverview @relation(fields: [overviewId], references: [id], onDelete: Cascade)
+}
+
+model Stint {
+  id         Int             @id @default(autoincrement())
+  overviewId Int
+  driver     String
+  lapFrom    Int
+  lapTo      Int
+  tyre       String
+  overview   SessionOverview @relation(fields: [overviewId], references: [id], onDelete: Cascade)
+}
+
+model CompareSnapshot {
+  id          Int  @id
+  drivers     Json
+  metrics     Json
+  deltaSeries Json
+  telemetry   Json
+}
+
+model LiveSnapshot {
+  id        Int  @id
+  lap       Int
+  positions Json
+  events    Json
+}

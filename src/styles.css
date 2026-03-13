@@ -1,0 +1,240 @@
+:root {
+  --bg: #0a0d12;
+  --panel: #11161e;
+  --panel-2: #171f2b;
+  --line: #2a3444;
+  --text: #eef4ff;
+  --muted: #9aa7be;
+  --papaya: #ff8847;
+  --ferrari: #ff2f2f;
+  --mclaren: #ff9700;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% -10%, #1c2536 0%, var(--bg) 45%);
+  color: var(--text);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.app-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.kicker {
+  margin: 0;
+  color: var(--papaya);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 6px 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab,
+button,
+select,
+.session-link {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.tab.active {
+  border-color: var(--papaya);
+  color: var(--papaya);
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.inline-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge {
+  border: 1px solid var(--mclaren);
+  color: var(--mclaren);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.metric {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.metric p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.metric h4 {
+  margin: 8px 0 2px;
+}
+
+.grid.two {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 12px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.session-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.session-link:hover {
+  border-color: var(--papaya);
+  color: var(--papaya);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stints {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stint-row {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.stint-track {
+  background: var(--panel-2);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+}
+
+.stint-chip {
+  padding: 6px;
+  font-size: 11px;
+  text-align: center;
+  color: #101319;
+  font-weight: 700;
+}
+
+.telemetry .row {
+  margin-bottom: 10px;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 8px;
+  background: #273244;
+  overflow: hidden;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--mclaren), var(--papaya));
+}
+
+.positions {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.positions li {
+  margin: 8px 0;
+}
+
+.feed {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feed li {
+  margin-bottom: 8px;
+  border-left: 3px solid var(--ferrari);
+  background: #151d2a;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+  .topbar,
+  .panel-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cards,
+  .grid.two {
+    grid-template-columns: 1fr;
+  }
+}
