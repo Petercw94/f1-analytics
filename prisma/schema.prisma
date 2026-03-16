@@ -4,18 +4,18 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model Session {
-  id         Int             @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   sessionKey Int             @unique
   label      String
   overview   SessionOverview?
+  drivers Driver[]
 }
 
 model SessionOverview {
-  id         Int       @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   sessionId  Int       @unique
   winner     String
   totalLaps  Int
@@ -28,7 +28,7 @@ model SessionOverview {
 }
 
 model LapPoint {
-  id         Int             @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   overviewId Int
   lap        Int
   norris     Float
@@ -37,7 +37,7 @@ model LapPoint {
 }
 
 model PitStop {
-  id          Int             @id @default(autoincrement())
+  id          Int @id @default(autoincrement())
   overviewId  Int
   driver      String
   lap         Int
@@ -47,7 +47,7 @@ model PitStop {
 }
 
 model Stint {
-  id         Int             @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   overviewId Int
   driver     String
   lapFrom    Int
@@ -69,4 +69,41 @@ model LiveSnapshot {
   lap       Int
   positions Json
   events    Json
+}
+
+model Meeting {
+  id Int @id @default(autoincrement())
+  circuitKey Int @map("circuit_key") 
+  circuitImage String @map("circuit_image") 
+  circuitInfoURL String @map("circuit_info_url")
+  circuitShortName String @map("circuit_short_name")
+  circuitType String @map("circuit_type")
+  countryCode String @map("country_code")
+  countryFlag String @map("country_flag")
+  countryKey Int @map("country_key")
+  countryName String @map("country_name")
+  dateEnd DateTime @map("date_end")
+  dateStart DateTime @map("date_start")
+  gmtOffset Int @map("gmt_offset")
+  location String
+  meetingKey Int @unique @map("meeting_key")
+  meetingName String @map("meeting_name")
+  meetingOfficialName String @map("meeting_official_name")
+  year Int 
+  drivers Driver[]
+}
+
+model Driver {
+  id Int @id @default(autoincrement())
+  broadcastName String @map("broadcast_name")
+  driverNumber Int @map("driver_number")
+  firstName String @map("first_name")
+  fullName String @map("full_name")
+  headshotURL String @map("headshot_url")
+  lastName String @map("last_name")
+  meetingKey Int
+  meeting Meeting @relation(fields: [meetingKey], references: [meetingKey], onDelete: Cascade)
+  nameAcronym String @map("name_acronym")
+  sessionKey Int
+  session Session @relation(fields: [sessionKey], references: [sessionKey], onDelete: Cascade)
 }

@@ -1,10 +1,18 @@
+import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import fs from "node:fs";
 import path from "node:path";
 
 const app = express();
-const prisma = new PrismaClient();
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not set");
+}
+
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
 const port = Number(process.env.PORT ?? 3000);
 
 app.get("/api/mock/sessions", async (_req, res) => {
@@ -47,13 +55,13 @@ app.get("/api/mock/session/:sessionKey/overview", async (req, res) => {
       overtakes: session.overview.overtakes,
       avgPitStop: session.overview.avgPitStop,
     },
-    lapSeries: session.overview.lapSeries.map((row) => ({
+    lapSeries: session.overview.lapSeries.map((row: { lap: number; norris: number; leclerc: number }) => ({
       lap: row.lap,
       norris: row.norris,
       leclerc: row.leclerc,
     })),
     pitStops: session.overview.pitStops,
-    stints: session.overview.stints.map((row) => ({
+    stints: session.overview.stints.map((row: { driver: string; lapFrom: number; lapTo: number; tyre: string }) => ({
       driver: row.driver,
       from: row.lapFrom,
       to: row.lapTo,
