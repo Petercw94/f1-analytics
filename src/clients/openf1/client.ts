@@ -224,7 +224,6 @@ export async function requestJson<T>(
     }
 
     if (RETRY_STATUSES.has(status) && retryCount < _config.maxRetryAttempts) {
-      // TODO: implement retry with backoff
 
       const retryAfter = parseRetryAfterMs(resp.headers);
       const backOffMs = computeBackoffMs(++retryCount, _config);
@@ -259,18 +258,41 @@ export function createOpenF1Client(
   _configOverrides: Partial<OpenF1ClientConfig> = {},
   _depsOverrides: Partial<OpenF1ClientDeps> = {},
 ) {
+  const _config = { ...DEFAULT_OPENF1_CONFIG, ..._configOverrides };
+  const _deps = { ...DEFAULT_OPENF1_DEPS, ..._depsOverrides };
+
   return {
     getMeetings: async (_params: GetMeetingsParams = {}): Promise<unknown[]> => {
-      throw new Error("Not implemented");
+      const _req: OpenF1RequestOptions = {
+        path: "/meetings",
+        query: _params,
+        timeoutMs: 1000,
+      }
+      return requestJson(_config, _deps, _req);
     },
     getSessions: async (_params: GetSessionsParams = {}): Promise<unknown[]> => {
-      throw new Error("Not implemented");
+      const _req: OpenF1RequestOptions = {
+        path: "/sessions",
+        query: _params,
+        timeoutMs: 1000,
+      }
+      return requestJson(_config, _deps, _req);
     },
     getDrivers: async (_params: GetDriversParams): Promise<unknown[]> => {
-      throw new Error("Not implemented");
+      const _req: OpenF1RequestOptions = {
+        path: "/drivers",
+        query: _params,
+        timeoutMs: 1000,
+      }
+      return requestJson(_config, _deps, _req);
     },
     getLaps: async (_params: GetLapsParams): Promise<unknown[]> => {
-      throw new Error("Not implemented");
+      const _req: OpenF1RequestOptions = {
+        path: "/drivers",
+        query: _params,
+        timeoutMs: 1000,
+      }
+      return requestJson(_config, _deps, _req);
     },
   };
 }
