@@ -7,28 +7,53 @@ datasource db {
 }
 
 model Session {
-  id         Int @id @default(autoincrement())
-  sessionKey Int             @unique
+  id         Int              @id @default(autoincrement())
+  sessionKey Int              @unique
   label      String
   overview   SessionOverview?
-  drivers Driver[]
+  drivers    Driver[]
+  laps       Lap[]
 }
 
 model SessionOverview {
-  id         Int @id @default(autoincrement())
-  sessionId  Int       @unique
+  id         Int        @id @default(autoincrement())
+  sessionId  Int        @unique
   winner     String
   totalLaps  Int
   overtakes  Int
   avgPitStop Float
-  session    Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  session    Session    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   lapSeries  LapPoint[]
   pitStops   PitStop[]
   stints     Stint[]
 }
 
+model Lap {
+  id              Int      @id @default(autoincrement())
+  dateStart       DateTime
+  driverNumber    Int
+  durationSector1 Float
+  durationSector2 Float
+  durationSector3 Float
+  i1Speed         Int
+  i2Speed         Int
+  isPitOutLap     Boolean
+  lapDuration     Float
+  lapNumber       Int
+  meetingKey      Int
+  meeting         Meeting  @relation(fields: [meetingKey], references: [meetingKey], onDelete: Cascade)
+  segmentsSector1 Int[]
+  segmentsSector2 Int[]
+  segmentsSector3 Int[]
+  sessionKey      Int
+  session         Session  @relation(fields: [sessionKey], references: [sessionKey], onDelete: Cascade)
+  stSpeed         Int
+
+  @@unique([sessionKey, driverNumber, lapNumber])
+}
+
 model LapPoint {
-  id         Int @id @default(autoincrement())
+  id         Int             @id @default(autoincrement())
   overviewId Int
   lap        Int
   norris     Float
@@ -37,7 +62,7 @@ model LapPoint {
 }
 
 model PitStop {
-  id          Int @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   overviewId  Int
   driver      String
   lap         Int
@@ -47,7 +72,7 @@ model PitStop {
 }
 
 model Stint {
-  id         Int @id @default(autoincrement())
+  id         Int             @id @default(autoincrement())
   overviewId Int
   driver     String
   lapFrom    Int
@@ -72,38 +97,41 @@ model LiveSnapshot {
 }
 
 model Meeting {
-  id Int @id @default(autoincrement())
-  circuitKey Int @map("circuit_key") 
-  circuitImage String @map("circuit_image") 
-  circuitInfoURL String @map("circuit_info_url")
-  circuitShortName String @map("circuit_short_name")
-  circuitType String @map("circuit_type")
-  countryCode String @map("country_code")
-  countryFlag String @map("country_flag")
-  countryKey Int @map("country_key")
-  countryName String @map("country_name")
-  dateEnd DateTime @map("date_end")
-  dateStart DateTime @map("date_start")
-  gmtOffset Int @map("gmt_offset")
-  location String
-  meetingKey Int @unique @map("meeting_key")
-  meetingName String @map("meeting_name")
-  meetingOfficialName String @map("meeting_official_name")
-  year Int 
-  drivers Driver[]
+  id                  Int      @id @default(autoincrement())
+  circuitKey          Int
+  circuitImage        String
+  circuitInfoURL      String
+  circuitShortName    String
+  circuitType         String
+  countryCode         String
+  countryFlag         String
+  countryKey          Int
+  countryName         String
+  dateEnd             DateTime
+  dateStart           DateTime
+  gmtOffset           Int
+  location            String
+  meetingKey          Int      @unique
+  meetingName         String
+  meetingOfficialName String
+  year                Int
+  drivers             Driver[]
+  laps                Lap[]
 }
 
 model Driver {
-  id Int @id @default(autoincrement())
-  broadcastName String @map("broadcast_name")
-  driverNumber Int @map("driver_number")
-  firstName String @map("first_name")
-  fullName String @map("full_name")
-  headshotURL String @map("headshot_url")
-  lastName String @map("last_name")
-  meetingKey Int
-  meeting Meeting @relation(fields: [meetingKey], references: [meetingKey], onDelete: Cascade)
-  nameAcronym String @map("name_acronym")
-  sessionKey Int
-  session Session @relation(fields: [sessionKey], references: [sessionKey], onDelete: Cascade)
+  id            Int     @id @default(autoincrement())
+  broadcastName String
+  driverNumber  Int
+  firstName     String
+  fullName      String
+  headshotURL   String
+  lastName      String
+  meetingKey    Int
+  meeting       Meeting @relation(fields: [meetingKey], references: [meetingKey], onDelete: Cascade)
+  nameAcronym   String
+  sessionKey    Int
+  session       Session @relation(fields: [sessionKey], references: [sessionKey], onDelete: Cascade)
+
+  @@unique([sessionKey, driverNumber])
 }
