@@ -16,6 +16,7 @@ Includes:
 
 - Existing client tests under `src/**/*.test.ts`
 - Prisma schema contract tests under `tests/**/*.unit.test.ts`
+- Ingestion parsing/mapping/orchestration contract tests under `tests/ingestion/*.unit.test.ts`
 
 The Prisma contract test checks for required model/constraint declarations directly in `prisma/schema.prisma`.
 
@@ -33,6 +34,7 @@ Checks:
 
 - `prisma validate` succeeds
 - `prisma generate` succeeds
+- `ingest-historical` CLI argument validation contract under `tests/ingestion/*.smoke.test.ts`
 
 ## Integration tests
 
@@ -54,6 +56,8 @@ What this does:
 - Runs `prisma db push --skip-generate`
 - Connects to Postgres
 - Asserts unique indexes exist for ingestion idempotency constraints
+- Verifies ingestion repository idempotency behavior (`createMany`/skip-duplicates strategy)
+- Verifies full fixture-driven `ingest-historical --year=YYYY` flow, row counts, and second-run idempotency
 
 ## Run everything
 

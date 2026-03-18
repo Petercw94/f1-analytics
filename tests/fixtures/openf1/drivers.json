@@ -1,0 +1,24 @@
+[
+  {
+    "meeting_key": 925001,
+    "session_key": 935001,
+    "driver_number": 4,
+    "broadcast_name": "L NORRIS",
+    "full_name": "Lando NORRIS",
+    "name_acronym": "NOR",
+    "first_name": "Lando",
+    "last_name": "Norris",
+    "headshot_url": "https://example.com/norris.png"
+  },
+  {
+    "meeting_key": 925001,
+    "session_key": 935001,
+    "driver_number": 16,
+    "broadcast_name": "C LECLERC",
+    "full_name": "Charles LECLERC",
+    "name_acronym": "LEC",
+    "first_name": "Charles",
+    "last_name": "Leclerc",
+    "headshot_url": "https://example.com/leclerc.png"
+  }
+]

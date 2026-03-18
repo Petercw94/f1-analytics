@@ -1,0 +1,18 @@
+[
+  {
+    "session_key": 935001,
+    "session_type": "Race",
+    "session_name": "Race",
+    "date_start": "2025-07-13T12:00:00+00:00",
+    "date_end": "2025-07-13T14:00:00+00:00",
+    "meeting_key": 925001,
+    "circuit_key": 555,
+    "circuit_short_name": "Test Circuit",
+    "country_key": 999,
+    "country_code": "TST",
+    "country_name": "Testland",
+    "location": "Test City",
+    "gmt_offset": "+03:00:00",
+    "year": 2025
+  }
+]

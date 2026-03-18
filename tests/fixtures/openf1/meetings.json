@@ -1,0 +1,21 @@
+[
+  {
+    "meeting_key": 925001,
+    "meeting_name": "Test Grand Prix",
+    "meeting_official_name": "FORMULA 1 TEST GRAND PRIX 2025",
+    "location": "Test City",
+    "country_key": 999,
+    "country_code": "TST",
+    "country_name": "Testland",
+    "country_flag": "https://example.com/flag.png",
+    "circuit_key": 555,
+    "circuit_short_name": "Test Circuit",
+    "circuit_type": "Permanent",
+    "circuit_info_url": "https://example.com/circuit-info",
+    "circuit_image": "https://example.com/circuit.png",
+    "gmt_offset": "+03:00:00",
+    "date_start": "2025-07-11T10:00:00+00:00",
+    "date_end": "2025-07-13T14:00:00+00:00",
+    "year": 2025
+  }
+]
